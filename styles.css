@@ -251,6 +251,39 @@ a { color: inherit; text-decoration: none; }
 }
 .success p { color: var(--muted); margin-bottom: 22px; }
 
+/* ============ Carga de documentos ============ */
+.docs { border: 2px dashed var(--line); border-radius: 14px; padding: 18px 18px 4px; margin: 4px 0 18px; background: var(--bg-alt); }
+.docs legend { font-weight: 800; padding: 0 8px; font-size: .95rem; }
+.docs__hint { font-size: .85rem; color: var(--muted); margin: 0 0 16px; }
+.optional { font-style: normal; font-weight: 500; color: var(--muted); }
+
+.upload__drop {
+  position: relative; display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; border: 2px dashed var(--line); border-radius: 12px;
+  background: #fff; cursor: pointer; transition: border-color .2s, background .2s;
+}
+.upload__drop:hover, .upload__drop:focus-within, .upload__drop.dragging { border-color: var(--primary); background: #fff8f3; }
+.upload__drop.has-files { border-style: solid; border-color: var(--ok); }
+.upload__icon { font-size: 1.4rem; }
+.upload__text { font-size: .9rem; color: var(--muted); }
+.upload__text strong { color: var(--primary-dark); }
+.upload input[type="file"] {
+  position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0;
+  padding: 0; border: 0; cursor: pointer;
+}
+.field.invalid .upload__drop { border-color: var(--danger); }
+
+.upload__list { list-style: none; margin: 8px 0 0; padding: 0; }
+.upload__list li {
+  display: flex; align-items: center; gap: 10px; padding: 8px 12px; margin-bottom: 6px;
+  background: #fff; border: 1px solid var(--line); border-radius: 10px; font-size: .88rem;
+}
+.upload__list li::before { content: "✓"; color: var(--ok); font-weight: 800; }
+.upload__name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.upload__list small { color: var(--muted); white-space: nowrap; }
+.upload__remove { border: 0; background: transparent; color: var(--danger); font-weight: 700; font-size: .82rem; padding: 4px 6px; border-radius: 6px; }
+.upload__remove:hover { background: #fdeaea; }
+
 /* ============ Responsive ============ */
 @media (max-width: 960px) {
   .services { grid-template-columns: repeat(2, 1fr); }

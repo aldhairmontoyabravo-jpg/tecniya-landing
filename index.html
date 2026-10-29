@@ -270,9 +270,47 @@
         <small class="error"></small>
       </label>
 
+      <fieldset class="docs">
+        <legend>Documentos de verificación</legend>
+        <p class="docs__hint">🔒 Los usamos solo para validar tu identidad y generar confianza en los clientes. Formatos: PDF, JPG o PNG (máx. 5 MB cada uno).</p>
+
+        <div class="field upload" data-max-files="1">
+          <span>DNI (ambas caras) *</span>
+          <label class="upload__drop">
+            <input type="file" name="doc_dni" accept=".pdf,.jpg,.jpeg,.png" required>
+            <span class="upload__icon" aria-hidden="true">📎</span>
+            <span class="upload__text"><strong>Elegir archivo</strong> o arrástralo aquí</span>
+          </label>
+          <ul class="upload__list"></ul>
+          <small class="error"></small>
+        </div>
+
+        <div class="field upload" data-max-files="1">
+          <span>Certificado de antecedentes penales *</span>
+          <label class="upload__drop">
+            <input type="file" name="doc_antecedentes" accept=".pdf,.jpg,.jpeg,.png" required>
+            <span class="upload__icon" aria-hidden="true">📎</span>
+            <span class="upload__text"><strong>Elegir archivo</strong> o arrástralo aquí</span>
+          </label>
+          <ul class="upload__list"></ul>
+          <small class="error"></small>
+        </div>
+
+        <div class="field upload" data-max-files="5">
+          <span>Certificados y constancias de experiencia <em class="optional">(opcional, hasta 5)</em></span>
+          <label class="upload__drop">
+            <input type="file" name="doc_certificados" accept=".pdf,.jpg,.jpeg,.png" multiple>
+            <span class="upload__icon" aria-hidden="true">📎</span>
+            <span class="upload__text"><strong>Elegir archivos</strong> o arrástralos aquí</span>
+          </label>
+          <ul class="upload__list"></ul>
+          <small class="error"></small>
+        </div>
+      </fieldset>
+
       <label class="check">
         <input type="checkbox" name="terminos" required>
-        <span>Acepto los términos y que me contacten para validar mis datos. *</span>
+        <span>Acepto los términos y autorizo el tratamiento de mis datos y documentos para validar mi identidad. *</span>
       </label>
       <small class="error error--check"></small>
 

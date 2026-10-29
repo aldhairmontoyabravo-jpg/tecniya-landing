@@ -108,6 +108,11 @@
     if (el.type === "checkbox") {
       return el.checked ? "" : "Debes aceptar para continuar.";
     }
+    if (el.type === "file") {
+      const files = [...el.files];
+      if (el.required && files.length === 0) return "Sube este documento para continuar.";
+      return files.map(fileProblem).find(Boolean) || "";
+    }
     if (el.required && !value) return "Este campo es obligatorio.";
     if (el.minLength > 0 && value && value.length < el.minLength) {
       return `Escribe al menos ${el.minLength} caracteres.`;
@@ -166,6 +171,114 @@
     })
   );
 
+  /* ---------- Carga de documentos ---------- */
+  const ALLOWED_EXT = ["pdf", "jpg", "jpeg", "png"];
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
+
+  const fileProblem = (file) => {
+    const ext = file.name.split(".").pop().toLowerCase();
+    if (!ALLOWED_EXT.includes(ext)) return `"${file.name}": solo se aceptan PDF, JPG o PNG.`;
+    if (file.size > MAX_FILE_SIZE) return `"${file.name}": supera el máximo de 5 MB.`;
+    return "";
+  };
+
+  const formatSize = (bytes) =>
+    bytes < 1024 * 1024
+      ? Math.max(1, Math.round(bytes / 1024)) + " KB"
+      : (bytes / 1024 / 1024).toFixed(1) + " MB";
+
+  const uploads = $$(".upload").map((block) => {
+    const input = $("input[type=file]", block);
+    const drop = $(".upload__drop", block);
+    const list = $(".upload__list", block);
+    const max = Number(block.dataset.maxFiles || 1);
+    let store = new DataTransfer(); // archivos aceptados de este campo
+
+    const render = () => {
+      list.innerHTML = "";
+      [...store.files].forEach((file, i) => {
+        const li = document.createElement("li");
+
+        const name = document.createElement("span");
+        name.className = "upload__name";
+        name.textContent = file.name;
+
+        const size = document.createElement("small");
+        size.textContent = formatSize(file.size);
+
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "upload__remove";
+        remove.textContent = "Quitar";
+        remove.setAttribute("aria-label", `Quitar ${file.name}`);
+        remove.addEventListener("click", () => {
+          const next = new DataTransfer();
+          [...store.files].forEach((f, j) => { if (j !== i) next.items.add(f); });
+          store = next;
+          input.files = store.files;
+          render();
+          showError(input, getError(input));
+        });
+
+        li.append(name, size, remove);
+        list.append(li);
+      });
+      drop.classList.toggle("has-files", store.files.length > 0);
+    };
+
+    const addFiles = (incoming) => {
+      const files = [...incoming];
+      const problems = [];
+
+      if (max === 1) {
+        // Campo de un solo archivo: reemplaza el anterior si el nuevo es válido
+        const file = files[0];
+        if (file) {
+          const problem = fileProblem(file);
+          if (problem) problems.push(problem);
+          else { store = new DataTransfer(); store.items.add(file); }
+        }
+      } else {
+        for (const file of files) {
+          const problem = fileProblem(file);
+          if (problem) { problems.push(problem); continue; }
+          if (store.files.length >= max) { problems.push(`Máximo ${max} archivos.`); break; }
+          const dup = [...store.files].some((f) => f.name === file.name && f.size === file.size);
+          if (!dup) store.items.add(file);
+        }
+      }
+
+      input.files = store.files; // el input solo conserva archivos válidos
+      render();
+      showError(input, problems[0] || getError(input));
+    };
+
+    input.addEventListener("change", () => addFiles(input.files));
+
+    ["dragenter", "dragover"].forEach((ev) =>
+      drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add("dragging"); })
+    );
+    ["dragleave", "drop"].forEach((ev) =>
+      drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.remove("dragging"); })
+    );
+    drop.addEventListener("drop", (e) => addFiles(e.dataTransfer.files));
+
+    return {
+      reset() {
+        store = new DataTransfer();
+        input.files = store.files;
+        render();
+      },
+    };
+  });
+
+  // Al limpiar el formulario, vacía también la lista de archivos
+  $$("form").forEach((form) =>
+    form.addEventListener("reset", () =>
+      setTimeout(() => uploads.forEach((u) => u.reset()), 0)
+    )
+  );
+
   /* ---------- Envío ---------- */
   const saveLocal = (key, data) => {
     try {
@@ -175,23 +288,26 @@
     } catch (_) { /* navegación privada o storage bloqueado */ }
   };
 
-  const send = async (endpoint, storageKey, data) => {
+  const send = async (endpoint, storageKey, data, formData) => {
     if (!endpoint) {
-      // Modo demo: guarda en el navegador y simula la espera de red
+      // Modo demo: guarda solo los datos de texto (y los nombres de los archivos),
+      // NUNCA los documentos. Los archivos reales requieren un backend.
       saveLocal(storageKey, data);
       console.info(`[TecniYa demo] Datos guardados en localStorage -> ${storageKey}`, data);
       await new Promise((r) => setTimeout(r, 700));
       return;
     }
+    const hasFiles = [...formData.values()].some((v) => v instanceof File && v.size > 0);
     const res = await fetch(endpoint, {
       method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify(data),
+      // Con archivos se envía multipart/form-data (el navegador pone el header solo)
+      headers: hasFiles ? { Accept: "application/json" } : { "Content-Type": "application/json", Accept: "application/json" },
+      body: hasFiles ? formData : JSON.stringify(data),
     });
     if (!res.ok) throw new Error("Error de red " + res.status);
   };
 
-  const handleSubmit = (form, { endpoint, storageKey, successMsg, extra }) => {
+  const handleSubmit = (form, { endpoint, storageKey, successMsg }) => {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       if (!validateForm(form)) return;
@@ -201,14 +317,22 @@
       btn.disabled = true;
       btn.textContent = "Enviando…";
 
-      const data = {
-        ...Object.fromEntries(new FormData(form).entries()),
-        creado: new Date().toISOString(),
-        ...(extra ? extra() : {}),
-      };
+      const formData = new FormData(form);
+      formData.append("creado", new Date().toISOString());
+
+      // Versión en texto de los datos (los archivos se describen, no se incluyen)
+      const data = {};
+      for (const [key, value] of formData.entries()) {
+        if (value instanceof File) {
+          if (!value.name || value.size === 0) continue;
+          (data[key] ||= []).push({ nombre: value.name, tipo: value.type, tamano: value.size });
+        } else {
+          data[key] = value;
+        }
+      }
 
       try {
-        await send(endpoint, storageKey, data);
+        await send(endpoint, storageKey, data, formData);
         form.reset();
         $$(".invalid", form).forEach((f) => f.classList.remove("invalid"));
         $$(".error", form).forEach((s) => (s.textContent = ""));
