@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TecniYa | Técnicos de confianza a tu puerta</title>
+  <meta name="description" content="Solicita un electricista, cerrajero, gasfitero y más. Rápido, cerca de ti y con técnicos verificados.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="#inicio" class="logo">Tecni<span>Ya</span></a>
+
+      <nav class="nav" id="nav" aria-label="Principal">
+        <a href="#servicios">Servicios</a>
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#tecnicos">Para técnicos</a>
+        <a href="#faq">Preguntas</a>
+        <button class="btn btn--ghost nav__mobile-cta" data-open="registro">Soy técnico</button>
+      </nav>
+
+      <div class="header__actions">
+        <button class="btn btn--ghost hide-mobile" data-open="registro">Soy técnico</button>
+        <button class="btn btn--primary" data-open="solicitud">Solicitar técnico</button>
+        <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+      <div class="container hero__inner">
+        <div class="hero__text">
+          <span class="badge">⚡ Atención rápida en tu zona</span>
+          <h1>El técnico que necesitas, <em>en minutos</em>.</h1>
+          <p>Electricistas, cerrajeros, gasfiteros y más. Cuéntanos qué necesitas y te conectamos con un profesional cerca de ti.</p>
+          <div class="hero__cta">
+            <button class="btn btn--primary btn--lg" data-open="solicitud">Solicitar un técnico</button>
+            <button class="btn btn--outline btn--lg" data-open="registro">Quiero ser técnico</button>
+          </div>
+          <ul class="hero__points">
+            <li>✔ Sin costo por solicitar</li>
+            <li>✔ Técnicos verificados</li>
+            <li>✔ Tú eliges con quién trabajar</li>
+          </ul>
+        </div>
+
+        <div class="hero__card" aria-hidden="true">
+          <div class="mini-request">
+            <p class="mini-request__title">Nueva solicitud</p>
+            <div class="mini-request__row"><span>🔧</span><div><strong>Electricista</strong><small>Cortocircuito en cocina</small></div></div>
+            <div class="mini-request__row"><span>📍</span><div><strong>Tu distrito</strong><small>Hoy · Urgente</small></div></div>
+            <div class="mini-request__status"><i></i> Buscando técnicos disponibles…</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section class="section" id="servicios">
+      <div class="container">
+        <h2 class="section__title">¿Qué servicio necesitas?</h2>
+        <p class="section__sub">Elige una categoría y completa tu solicitud en menos de un minuto.</p>
+
+        <div class="services" id="services">
+          <button class="service" data-service="Electricista"><span class="service__icon">💡</span><strong>Electricista</strong><small>Instalaciones, fallas, tableros</small></button>
+          <button class="service" data-service="Cerrajero"><span class="service__icon">🔑</span><strong>Cerrajero</strong><small>Aperturas, cambio de chapas</small></button>
+          <button class="service" data-service="Gasfitero"><span class="service__icon">🚰</span><strong>Gasfitero</strong><small>Fugas, desagües, terma</small></button>
+          <button class="service" data-service="Técnico de electrodomésticos"><span class="service__icon">🧺</span><strong>Electrodomésticos</strong><small>Lavadoras, refrigeradoras</small></button>
+          <button class="service" data-service="Carpintero"><span class="service__icon">🪚</span><strong>Carpintero</strong><small>Muebles, puertas, closets</small></button>
+          <button class="service" data-service="Pintor"><span class="service__icon">🎨</span><strong>Pintor</strong><small>Interiores y exteriores</small></button>
+          <button class="service" data-service="Técnico de computadoras"><span class="service__icon">💻</span><strong>Computadoras</strong><small>Reparación y redes</small></button>
+          <button class="service" data-service="Otro"><span class="service__icon">➕</span><strong>Otro servicio</strong><small>Cuéntanos qué necesitas</small></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMO FUNCIONA -->
+    <section class="section section--alt" id="como-funciona">
+      <div class="container">
+        <h2 class="section__title">Así de fácil</h2>
+        <p class="section__sub">Tres pasos y el problema queda resuelto.</p>
+        <div class="steps">
+          <article class="step"><span class="step__num">1</span><h3>Cuéntanos qué pasó</h3><p>Elige el servicio, tu zona y describe el problema.</p></article>
+          <article class="step"><span class="step__num">2</span><h3>Te contactan técnicos</h3><p>Los profesionales disponibles cerca de ti reciben tu solicitud.</p></article>
+          <article class="step"><span class="step__num">3</span><h3>Acuerdas y listo</h3><p>Coordinas precio y horario directamente con el técnico.</p></article>
+        </div>
+        <div class="center">
+          <button class="btn btn--primary btn--lg" data-open="solicitud">Empezar ahora</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARA TECNICOS -->
+    <section class="section" id="tecnicos">
+      <div class="container tech">
+        <div class="tech__text">
+          <span class="badge badge--dark">Para profesionales</span>
+          <h2>¿Eres técnico? Consigue más clientes.</h2>
+          <p>Regístrate gratis, recibe solicitudes de tu zona y trabaja a tu ritmo. Tú decides qué trabajos aceptar.</p>
+          <ul class="checklist">
+            <li>Recibe clientes sin buscar</li>
+            <li>Define tus horarios y tu zona de trabajo</li>
+            <li>Construye tu reputación con cada trabajo</li>
+          </ul>
+          <button class="btn btn--dark btn--lg" data-open="registro">Registrarme como técnico</button>
+        </div>
+        <div class="tech__panel" aria-hidden="true">
+          <div class="stat"><strong>0 S/</strong><span>costo de registro</span></div>
+          <div class="stat"><strong>24/7</strong><span>solicitudes disponibles</span></div>
+          <div class="stat"><strong>100%</strong><span>tú decides tus trabajos</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section section--alt" id="faq">
+      <div class="container container--narrow">
+        <h2 class="section__title">Preguntas frecuentes</h2>
+        <details class="faq"><summary>¿Cuánto cuesta solicitar un técnico?</summary><p>Solicitar es gratis. El precio del trabajo lo acuerdas directamente con el técnico antes de empezar.</p></details>
+        <details class="faq"><summary>¿Cómo sé que el técnico es de confianza?</summary><p>Revisamos los datos de cada técnico al registrarse y, con el tiempo, podrás ver su historial y opiniones.</p></details>
+        <details class="faq"><summary>¿En qué zonas funciona?</summary><p>Estamos empezando. Indica tu distrito en la solicitud y te avisaremos si hay técnicos disponibles.</p></details>
+        <details class="faq"><summary>¿Cómo me registro como técnico?</summary><p>Pulsa "Soy técnico", completa el formulario y nos pondremos en contacto contigo para validar tus datos.</p></details>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="cta">
+      <div class="container cta__inner">
+        <h2>¿Tienes una urgencia en casa?</h2>
+        <p>Solicita ahora y recibe respuesta rápido.</p>
+        <button class="btn btn--light btn--lg" data-open="solicitud">Solicitar un técnico</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a href="#inicio" class="logo logo--light">Tecni<span>Ya</span></a>
+      <p>© <span id="year"></span> TecniYa. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- MODAL: SOLICITUD -->
+  <dialog class="modal" id="modal-solicitud" aria-labelledby="t-solicitud">
+    <form class="form" id="form-solicitud" novalidate>
+      <button type="button" class="modal__close" data-close aria-label="Cerrar">×</button>
+      <h3 id="t-solicitud">Solicitar un técnico</h3>
+      <p class="form__lead">Completa los datos y te contactaremos con técnicos disponibles.</p>
+
+      <label class="field">
+        <span>¿Qué servicio necesitas? *</span>
+        <select name="servicio" required>
+          <option value="">Selecciona…</option>
+          <option>Electricista</option>
+          <option>Cerrajero</option>
+          <option>Gasfitero</option>
+          <option>Técnico de electrodomésticos</option>
+          <option>Carpintero</option>
+          <option>Pintor</option>
+          <option>Técnico de computadoras</option>
+          <option>Otro</option>
+        </select>
+        <small class="error"></small>
+      </label>
+
+      <div class="field-row">
+        <label class="field">
+          <span>Tu nombre *</span>
+          <input type="text" name="nombre" placeholder="Ej. María Pérez" required minlength="2" autocomplete="name">
+          <small class="error"></small>
+        </label>
+        <label class="field">
+          <span>Celular *</span>
+          <input type="tel" name="telefono" placeholder="987654321" required inputmode="numeric" autocomplete="tel">
+          <small class="error"></small>
+        </label>
+      </div>
+
+      <label class="field">
+        <span>Distrito / zona *</span>
+        <input type="text" name="distrito" placeholder="Ej. Miraflores" required>
+        <small class="error"></small>
+      </label>
+
+      <label class="field">
+        <span>Describe el problema *</span>
+        <textarea name="descripcion" rows="3" placeholder="Ej. Se fue la luz en la cocina y salta el térmico" required minlength="10"></textarea>
+        <small class="error"></small>
+      </label>
+
+      <fieldset class="urgency">
+        <legend>¿Qué tan urgente es?</legend>
+        <label><input type="radio" name="urgencia" value="Ahora" checked> <span>Ahora</span></label>
+        <label><input type="radio" name="urgencia" value="Hoy"> <span>Hoy</span></label>
+        <label><input type="radio" name="urgencia" value="Esta semana"> <span>Esta semana</span></label>
+      </fieldset>
+
+      <button type="submit" class="btn btn--primary btn--block">Enviar solicitud</button>
+    </form>
+  </dialog>
+
+  <!-- MODAL: REGISTRO TECNICO -->
+  <dialog class="modal" id="modal-registro" aria-labelledby="t-registro">
+    <form class="form" id="form-registro" novalidate>
+      <button type="button" class="modal__close" data-close aria-label="Cerrar">×</button>
+      <h3 id="t-registro">Regístrate como técnico</h3>
+      <p class="form__lead">Es gratis. Validaremos tus datos y te contactaremos.</p>
+
+      <div class="field-row">
+        <label class="field">
+          <span>Nombre completo *</span>
+          <input type="text" name="nombre" required minlength="3" autocomplete="name">
+          <small class="error"></small>
+        </label>
+        <label class="field">
+          <span>Celular *</span>
+          <input type="tel" name="telefono" placeholder="987654321" required inputmode="numeric" autocomplete="tel">
+          <small class="error"></small>
+        </label>
+      </div>
+
+      <label class="field">
+        <span>Correo electrónico *</span>
+        <input type="email" name="email" required autocomplete="email">
+        <small class="error"></small>
+      </label>
+
+      <div class="field-row">
+        <label class="field">
+          <span>Tu oficio *</span>
+          <select name="oficio" required>
+            <option value="">Selecciona…</option>
+            <option>Electricista</option>
+            <option>Cerrajero</option>
+            <option>Gasfitero</option>
+            <option>Técnico de electrodomésticos</option>
+            <option>Carpintero</option>
+            <option>Pintor</option>
+            <option>Técnico de computadoras</option>
+            <option>Otro</option>
+          </select>
+          <small class="error"></small>
+        </label>
+        <label class="field">
+          <span>Años de experiencia *</span>
+          <select name="experiencia" required>
+            <option value="">Selecciona…</option>
+            <option>Menos de 1 año</option>
+            <option>1 a 3 años</option>
+            <option>3 a 5 años</option>
+            <option>Más de 5 años</option>
+          </select>
+          <small class="error"></small>
+        </label>
+      </div>
+
+      <label class="field">
+        <span>Distritos donde trabajas *</span>
+        <input type="text" name="zonas" placeholder="Ej. Miraflores, San Isidro, Surco" required>
+        <small class="error"></small>
+      </label>
+
+      <label class="check">
+        <input type="checkbox" name="terminos" required>
+        <span>Acepto los términos y que me contacten para validar mis datos. *</span>
+      </label>
+      <small class="error error--check"></small>
+
+      <button type="submit" class="btn btn--dark btn--block">Enviar registro</button>
+    </form>
+  </dialog>
+
+  <!-- MODAL: EXITO -->
+  <dialog class="modal modal--small" id="modal-exito" aria-labelledby="t-exito">
+    <div class="success">
+      <div class="success__icon">✓</div>
+      <h3 id="t-exito">¡Listo!</h3>
+      <p id="exito-msg"></p>
+      <button type="button" class="btn btn--primary" data-close>Entendido</button>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
