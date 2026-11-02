@@ -307,7 +307,7 @@
     if (!res.ok) throw new Error("Error de red " + res.status);
   };
 
-  const handleSubmit = (form, { endpoint, storageKey, successMsg }) => {
+const handleSubmit = (form, { endpoint, storageKey, successMsg, eventName }) => {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       if (!validateForm(form)) return;
@@ -333,6 +333,12 @@
 
       try {
         await send(endpoint, storageKey, data, formData);
+        // Avisa a Google Analytics (sin enviar datos personales)
+if (typeof gtag === "function") {
+  gtag("event", eventName, {
+    servicio: data.servicio || data.oficio || "",
+  });
+}
         form.reset();
         $$(".invalid", form).forEach((f) => f.classList.remove("invalid"));
         $$(".error", form).forEach((s) => (s.textContent = ""));
@@ -353,6 +359,7 @@
   handleSubmit($("#form-solicitud"), {
     endpoint: CONFIG.ENDPOINT_SOLICITUD,
     storageKey: "tecniya_solicitudes",
+    eventName:"solicitud_servicio",
     successMsg: (d) =>
       `Recibimos tu solicitud de ${d.servicio.toLowerCase()}. Te contactaremos pronto al ${d.telefono}.`,
   });
@@ -360,6 +367,7 @@
   handleSubmit($("#form-registro"), {
     endpoint: CONFIG.ENDPOINT_REGISTRO,
     storageKey: "tecniya_tecnicos",
+    eventName:"registro_tecnico",
     successMsg: (d) =>
       `Gracias, ${d.nombre.split(" ")[0]}. Revisaremos tus datos y te escribiremos al ${d.telefono} o a ${d.email}.`,
   });
