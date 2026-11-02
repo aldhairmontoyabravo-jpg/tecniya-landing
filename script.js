@@ -359,7 +359,7 @@ if (typeof gtag === "function") {
   handleSubmit($("#form-solicitud"), {
     endpoint: CONFIG.ENDPOINT_SOLICITUD,
     storageKey: "tecniya_solicitudes",
-    eventName:"solicitud_servicio",
+    eventName:"solicitud_tecnico",
     successMsg: (d) =>
       `Recibimos tu solicitud de ${d.servicio.toLowerCase()}. Te contactaremos pronto al ${d.telefono}.`,
   });
